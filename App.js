@@ -1,31 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 
 class App extends React.Component {
-  constructor(){
+  constructor() {
     super();
-    this.update = this.update.bind(this);
-    this.state = {increasing: false}
-  }
-  update(){
-    ReactDOM.render(
-      <App val={this.props.val+1} />,
-      document.getElementById('app')
-    );
-  }
-  componentWillReceiveProps(nextProps){
-    this.setState({increasing: nextProps.val > this.props.val})
+    this.state = {data: [
+      {id: 1, name: 'Simon Bailey'}, {id: 2, name: 'Julion Alvarez'},
+      {id: 3, name: 'Conjunto Primavera'}, {id: 4, name: 'Raul Perez'},
+    ]}
   }
   render(){
-    console.log(this.state.increasing)
-    return (
-      <button onClick={this.update}>
-        {this.props.val}
-      </button>
-    )
+    let rows = this.state.data.map( person => {
+      return <PersonRow key={person.id} data={person} />
+    })
+
+    return <table>
+      <tbody>{rows}</tbody>
+    </table>
   }
 }
 
-App.defaultProps = { val: 0 }
+const PersonRow = (props) => {
+  return <tr>
+    <td>{props.data.id}</td>
+    <td>{props.data.name}</td>
+  </tr>
+}
 
 export default App
